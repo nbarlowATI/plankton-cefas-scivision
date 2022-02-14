@@ -1,0 +1,8 @@
+sources:
+  plankton_single:
+      description: Load example images of plankton from COPEPEDIA public dataset
+      origin: 
+      driver: intake_xarray.image.ImageSource
+      args:
+        urlpath: ["https://www.st.nmfs.noaa.gov/copepedia/taxa/T4000005/photos/T4000005-002__cpi150-0010__Calanus-finmarchicus.jpg",
+                  "https://www.st.nmfs.noaa.gov/copepedia/taxa/T4000042/photos/thumb__T4000042-001__cpi310-0000__Calocalanus-pavo.jpg"]
