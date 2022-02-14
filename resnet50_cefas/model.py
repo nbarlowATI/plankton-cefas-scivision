@@ -61,7 +61,7 @@ class resnet50:
 
         all_labels_flatten = torch.stack(all_labels).flatten()
 
-        self.show_output(cube,all_labels_flatten,xarray=True)
+        self.show_output(image,all_labels_flatten,xarray=True)
 
         return all_labels_flatten
 
