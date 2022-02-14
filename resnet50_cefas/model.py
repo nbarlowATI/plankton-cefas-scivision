@@ -43,11 +43,11 @@ class resnet50:
         plt.title("Prediction: {}".format(self.labels_map[int(preds.detach().numpy())]))
         plt.show()
 
-    def predict_batch(self, cube: np.ndarray, batch_size: int):
+    def predict_batch(self, image: np.ndarray, batch_size: int):
 
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-        dataset = PlanktonDataset(cube)
+        dataset = PlanktonDataset(image)
 
         dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
 
