@@ -26,7 +26,7 @@ class resnet50:
         target_classes = len(self.labels_map.values())
 
         # ---- LOAD PRETRAINED MODEL
-        model = torchvision.models.resnet50(pretrained=True)
+        model = torchvision.models.resnet50(pretrained=False)
         num_ftrs = model.fc.in_features
         model.fc = torch.nn.Linear(num_ftrs, target_classes)
 
