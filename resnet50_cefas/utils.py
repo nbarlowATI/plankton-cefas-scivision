@@ -1,16 +1,16 @@
 # label1
 label1_classes = ['detritus', 'plankton']
 
-label1 = range(0, 1)
+label1 = range(0, 2)
 
 label1_map = dict(zip(label1, label1_classes))
 
 # label2
 label2_classes = ['copepod', 'detritus', 'noncopepod']
-label2_classes_only = label2_classes
+label2_classes_only = label2_classes.copy()
 label2_classes_only.remove('detritus')
 
-label2 = range(0, 1)
+label2 = range(0, 2)
 label2_detritus = range(0, 3)
 
 label2_detritus_map = dict(zip(label2_detritus, label2_classes))
@@ -50,7 +50,7 @@ experiments = {
 
 
 class PlanktonLabels:
-    def __init__(self, experiment='label3_wdetritus'):
+    def __init__(self, experiment='label2_detritus'):
         self.experiment = experiment
 
     def labels(self):
