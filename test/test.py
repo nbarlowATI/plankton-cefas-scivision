@@ -4,7 +4,7 @@ import xarray as xr
 from resnet50_cefas import resnet50
 
 # load model
-model = resnet50(label_level='label3_detritus')
+model = resnet50(label_level='label2_detritus')
 
 # test numpy array
 ## create RGB image
