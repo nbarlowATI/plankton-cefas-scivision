@@ -1,8 +1,15 @@
+metadata:
+  version: 1
+
+plugins:
+  source:
+      - module: intake_xarray
+
 sources:
-  plankton_single:
+  plankton:
       description: Load example images of plankton from COPEPEDIA public dataset
-      origin: 
       driver: intake_xarray.image.ImageSource
+      metadata:
+        zenodo_doi: "10.5281/zenodo.6143547"
       args:
-        urlpath: ["https://www.st.nmfs.noaa.gov/copepedia/taxa/T4000005/photos/T4000005-002__cpi150-0010__Calanus-finmarchicus.jpg",
-                  "https://www.st.nmfs.noaa.gov/copepedia/taxa/T4000042/photos/thumb__T4000042-001__cpi310-0000__Calocalanus-pavo.jpg"]
+        urlpath: "{{ CATALOG_DIR }}/PLANKTON/*.tif"
