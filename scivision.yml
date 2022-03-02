@@ -1,6 +1,6 @@
 sources:
   plankton:
-      description: Load example images of plankton from COPEPEDIA public dataset
+      description: Sample images required to demonstrate the ResNet50 model trained in the Rapid Identification of Plankton using Machine Learning DSG  undertaken by Cefas, The Alan Turing Institute and Plankton Analytics Ltd. 
       origin: 
       driver: intake_xarray.image.ImageSource
       args:
