@@ -1,6 +1,6 @@
 sources:
   plankton:
-      description: Load example images
+      description: Load example images of plankton from COPEPEDIA public dataset
       origin: 
       driver: intake_xarray.image.ImageSource
       args:
