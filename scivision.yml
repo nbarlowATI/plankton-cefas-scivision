@@ -5,3 +5,7 @@ sources:
       driver: intake_xarray.image.ImageSource
       args:
         urlpath: ["zip://*.tif::https://zenodo.org/record/6143685/files/images.zip"]
+        chunks: {}
+        storage_options: {'anon': True}
+        coerce_shape: [1000, 1000]
+        exif_tags: True
