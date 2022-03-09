@@ -5,10 +5,6 @@ import torchvision
 class PlanktonDataset(Dataset):
     def __init__(self, ds, output_path=None):
         self.ds = ds
-        self.ds = self.ds.assign(
-            image_width = self.ds['EXIF Image ImageWidth'].to_pandas().apply(lambda x: x.values[0]),
-            image_length = self.ds['EXIF Image ImageLength'].to_pandas().apply(lambda x: x.values[0])
-        )
         self.n_images = self.ds.dims['concat_dim']
         self.img_ixs = self.ds.concat_dim.values
         if output_path is not None:
@@ -22,12 +18,12 @@ class PlanktonDataset(Dataset):
         imw = im_raw.image_width.values
         iml = im_raw.image_length.values
 
-        im_pre = im_raw['raster'][0:iml, 0:imw, :].values
+        im_ori = im_raw['raster'][0:iml, 0:imw, :].values
 
-        im_pre = torchvision.transforms.ToTensor()(im_pre)
-        im_pre = torchvision.transforms.Resize((256,256))(im_pre)
+        im_model = torchvision.transforms.ToTensor()(im_ori)
+        im_model = torchvision.transforms.Resize((256,256))(im_model)
 
         X_raw = im_raw['raster'].values #raw image
-        X_pre = im_pre #resize image
+        X_model = im_model #image transformed for prediction
 
-        return X_raw, X_pre
+        return X_raw, X_model
