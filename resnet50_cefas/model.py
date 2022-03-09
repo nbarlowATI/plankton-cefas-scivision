@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 from .utils import PlanktonLabels
 import pooch
-
+import random
 
 class resnet50:
     def __init__(self, model_weights: dict = None, label_level=None):
@@ -37,20 +37,29 @@ class resnet50:
         self.pretrained_model = model
         self.pretrained_model.eval()
 
+    def get_sample(self, ds, idx):
+        idx = idx or np.random.choice(ds.concat_dim.values)
+        im_target = ds.sel(concat_dim=idx)
+        image = im_target['raster'].values
+        iml = im_target.image_length.values
+        imw = im_target.image_width.values
+        return idx, image[0:iml, 0:imw, :]
+
     def show_output(self, obs, preds, xarray=False):
 
         plt.figure()
         if xarray:
-            ix = 0
-            im_target = obs.sel(concat_dim=ix)
-            image = im_target['raster'].values
-            iml = im_target.image_length.values
-            imw = im_target.image_width.values
-            plt.imshow(image[0:iml, 0:imw, :])
-            preds = preds[ix]
+            plt.figure(figsize=(20, 20))
+            columns = 5
+            samples = [self.get_sample(obs, i) for i in range(26)]
+            for i, image in enumerate(samples):
+                plt.subplot(int(len(samples) / columns + 1), columns, i + 1)
+                plt.imshow(image[1])
+                pred_target = preds[image[0]]
+                plt.title("Prediction: {}".format(self.labels_map[int(pred_target.detach().numpy())]))
         else:
             plt.imshow(obs)
-        plt.title("Prediction: {}".format(self.labels_map[int(preds.detach().numpy())]))
+            plt.title("Prediction: {}".format(self.labels_map[int(preds.detach().numpy())]))
         plt.show()
 
     def predict_batch(self, image: np.ndarray, batch_size: int):
