@@ -37,8 +37,7 @@ class resnet50:
         self.pretrained_model = model
         self.pretrained_model.eval()
 
-    def get_sample(self, ds, idx=None):
-        idx = idx or np.random.choice(ds.concat_dim.values)
+    def get_sample(self, ds, idx):
         im_target = ds.sel(concat_dim=idx)
         image = im_target['raster'].values
         iml = im_target.image_length.values
@@ -47,7 +46,6 @@ class resnet50:
 
     def show_output(self, obs, preds, xarray=False):
 
-        plt.figure()
         if xarray:
             plt.figure(figsize=(20, 20))
             columns = 5
@@ -59,6 +57,7 @@ class resnet50:
                 pred_target = preds[image[0]]
                 plt.title("Prediction: {}".format(self.labels_map[int(pred_target.detach().numpy())]), fontsize='xx-large')
         else:
+            plt.figure()
             plt.imshow(obs)
             plt.title("Prediction: {}".format(self.labels_map[int(preds.detach().numpy())]), fontsize='xx-large')
             plt.axis('off')
