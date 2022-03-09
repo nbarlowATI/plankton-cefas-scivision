@@ -5,6 +5,10 @@ import torchvision
 class PlanktonDataset(Dataset):
     def __init__(self, ds, output_path=None):
         self.ds = ds
+        self.ds = self.ds.assign(
+            image_width = self.ds['EXIF Image ImageWidth'].to_pandas().apply(lambda x: x.values[0]),
+            image_length = self.ds['EXIF Image ImageLength'].to_pandas().apply(lambda x: x.values[0])
+        )
         self.n_images = self.ds.dims['concat_dim']
         self.img_ixs = self.ds.concat_dim.values
         if output_path is not None:
