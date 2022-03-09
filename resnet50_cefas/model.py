@@ -37,7 +37,7 @@ class resnet50:
         self.pretrained_model = model
         self.pretrained_model.eval()
 
-    def get_sample(self, ds, idx):
+    def get_sample(self, ds, idx=None):
         idx = idx or np.random.choice(ds.concat_dim.values)
         im_target = ds.sel(concat_dim=idx)
         image = im_target['raster'].values
@@ -51,7 +51,7 @@ class resnet50:
         if xarray:
             plt.figure(figsize=(20, 20))
             columns = 5
-            samples = [self.get_sample(obs, i) for i in range(26)]
+            samples = [self.get_sample(obs, idx=i) for i in range(26)]
             for i, image in enumerate(samples):
                 plt.subplot(int(len(samples) / columns + 1), columns, i + 1)
                 plt.imshow(image[1])
