@@ -55,11 +55,13 @@ class resnet50:
             for i, image in enumerate(samples):
                 plt.subplot(int(len(samples) / columns + 1), columns, i + 1)
                 plt.imshow(image[1])
+                plt.axis('off')
                 pred_target = preds[image[0]]
-                plt.title("Prediction: {}".format(self.labels_map[int(pred_target.detach().numpy())]))
+                plt.title("Prediction: {}".format(self.labels_map[int(pred_target.detach().numpy())]), fontsize='xx-large')
         else:
             plt.imshow(obs)
-            plt.title("Prediction: {}".format(self.labels_map[int(preds.detach().numpy())]))
+            plt.title("Prediction: {}".format(self.labels_map[int(preds.detach().numpy())]), fontsize='xx-large')
+            plt.axis('off')
         plt.show()
 
     def predict_batch(self, image: np.ndarray, batch_size: int):
