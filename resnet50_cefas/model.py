@@ -44,8 +44,8 @@ class resnet50:
             ix = 0
             im_target = obs.sel(concat_dim=ix)
             image = im_target['raster'].values
-            imw = im_target.image_width.values
             iml = im_target.image_length.values
+            imw = im_target.image_width.values
             plt.imshow(image[0:iml, 0:imw, :])
             preds = preds[ix]
         else:
@@ -56,6 +56,12 @@ class resnet50:
     def predict_batch(self, image: np.ndarray, batch_size: int):
 
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+        # add with and length info
+        image = image.assign(
+            image_width = image['EXIF Image ImageWidth'].to_pandas().apply(lambda x: x.values[0]),
+            image_length = image['EXIF Image ImageLength'].to_pandas().apply(lambda x: x.values[0])
+        )
 
         dataset = PlanktonDataset(image)
 
@@ -69,7 +75,7 @@ class resnet50:
                 _, preds = torch.max(outputs, 1)
                 all_labels.append(preds)
 
-        all_labels_flatten = torch.stack(all_labels).flatten()
+        all_labels_flatten = torch.cat(all_labels)
 
         self.show_output(image,all_labels_flatten,xarray=True)
 
