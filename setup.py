@@ -12,7 +12,7 @@ setup(
     name="resnet50_cefas",
     version="0.0.1",
     description="scivision plugin, using CEFAS DSG Plankton ResNet50 model",
-    url="https://github.com/alan-turing-institute/plankton-cefas-scivision",
+    url="https://github.com/nbarlowATI/plankton-cefas-scivision",
     packages=find_packages(),
     install_requires=requirements,
     python_requires=">=3.7",
